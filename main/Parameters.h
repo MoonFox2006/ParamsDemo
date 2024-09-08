@@ -74,8 +74,8 @@ bool Parameters<T>::begin() {
         size_t size = sizeof(paramblob_t);
 
         err = nvs_get_blob(_nvs, NVS_BLOBNAME, &_blob, &size);
-        if ((err == ESP_OK) || (err == ESP_ERR_NVS_NOT_FOUND)) {
-            if ((err == ESP_ERR_NVS_NOT_FOUND) || (! check()))
+        if ((err == ESP_OK) || (err == ESP_ERR_NVS_NOT_FOUND) || (err == ESP_ERR_NVS_INVALID_LENGTH)) {
+            if ((err != ESP_OK) || (! check()))
                 clear();
             return true;
         } else
